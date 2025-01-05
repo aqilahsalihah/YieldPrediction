@@ -112,7 +112,7 @@ def page2():
                 with cols[1]:
                     st.subheader('Predicted Yield')
                     ffb_pred = ffb_model.predict(ssp_input)[0]
-                    threshold_ffb = 1.40
+                    threshold_ffb = 1.38
                     colour = 'green' if ffb_pred > threshold_ffb else 'red'
                     st.markdown(
                         f"""
@@ -126,7 +126,7 @@ def page2():
                     st.divider()
                         
                     cpo_pred = cpo_model.predict(ssp_input)[0]
-                    threshold_cpo = 0.3
+                    threshold_cpo = 0.27
                     colour = 'green' if cpo_pred > threshold_cpo else 'red'
                     
                     
