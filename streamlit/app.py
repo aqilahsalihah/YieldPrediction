@@ -19,7 +19,7 @@ pages = {
     'Navigation': [
         st.Page('About.py', title='About'),
         st.Page('Dashboard.py', title='Dashboard'),
-        st.Page('modeltest.py', title='Prediction Tool'),
+        st.Page('PredictionTool.py', title='Prediction Tool'),
     ]
 }
 
