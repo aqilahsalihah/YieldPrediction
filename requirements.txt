@@ -1,7 +1,6 @@
 altair==5.5.0
 jamaibase==0.3.0
 joblib==1.4.2
-joblib==1.4.0
 matplotlib==3.8.4
 millify==0.1.1
 numpy==1.24.4
