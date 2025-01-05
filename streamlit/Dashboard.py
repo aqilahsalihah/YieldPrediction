@@ -33,11 +33,11 @@ def harvest_category(value, avg_value, highest_value):
     else:
         return 'Above Average'
       
-palm_oil = load_data('data/palm_oil.csv')
+palm_oil = load_data("streamlit/data/palm_oil.csv")
 palm_oil = get_month_name(palm_oil)
 
-climate_info = load_data('data/historical_climate_v2.csv')
-climate_2 = load_data('data\ssp126_climate3.csv')
+climate_info = load_data('streamlit/data/historical_climate_v2.csv')
+climate_2 = load_data('streamlit/data/ssp126_climate3.csv')
 
 climate_info = pd.concat([climate_info, climate_2], ignore_index=True)
 climate_info = get_month_name(climate_info)
