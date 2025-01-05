@@ -101,7 +101,7 @@ def page2():
                 selected_month = st.slider('Select Month', min_value=1, max_value=12, value=1, step=1)
                 
                 # fetch SSP data 
-                ssp_df = pd.read_csv(f'streamlit/data/{selected_ssp}_climate3.csv')
+                ssp_df = pd.read_csv(f'streamlit/data/{selected_ssp.lower()}_climate3.csv')
                 ssp_input = ssp_df[(ssp_df['Year'] == selected_years) & (ssp_df['Month'] == selected_month)]
                 ssp_input = ssp_input[['Month','pr', 'rolling_pr_3y', 'tas', 'tasmin', 'tasmax', 'tas_range', 'hurs']]
                 st.write(f'Pojected Climate Data for {selected_month}, {selected_years}: ')
@@ -140,13 +140,3 @@ def page2():
                         unsafe_allow_html=True
                     )           
 page2()
-      
-
-# model = load_model('streamlit/ffb_yield_model2.pkl')
-# data = load_data('streamlit/data/ssp126_climate3.csv')
-# data.drop(['Year', 'Year_group'], axis=1, inplace=True)
-# print(data.head())
-
-# X = data[['Month','pr', 'rolling_pr_3y', 'tas', 'tasmin', 'tasmax', 'tas_range', 'hurs']]
-# y = prediction = model.predict(X)
-# print(y) 
