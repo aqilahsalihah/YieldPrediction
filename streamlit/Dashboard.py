@@ -36,8 +36,8 @@ def harvest_category(value, avg_value, highest_value):
 palm_oil = load_data("streamlit/data/palm_oil.csv")
 palm_oil = get_month_name(palm_oil)
 
-climate_info = load_data('streamlit/data/historical_climate_v2.csv')
-climate_2 = load_data('streamlit/data/ssp126_climate3.csv')
+climate_info = load_data('streamlit/data/historical_climate_v4.csv')
+climate_2 = load_data('streamlit/data/ssp126_climate4.csv')
 
 climate_info = pd.concat([climate_info, climate_2], ignore_index=True)
 climate_info = get_month_name(climate_info)
@@ -222,21 +222,21 @@ def page1():
 
     with col[0]: # metrics
 
-        st.subheader("Key Metrics")
+        st.subheader(f"{latest_year} Key Metrics")
         st.metric(
-            label=f"FFB Yield {latest_year}",
-            value=f"{latest_ffb:.2f}%",
+            label=f"Total FFB Yield (tons/Ha)",
+            value=f"{latest_ffb:.2f}",
             delta=f"{(latest_ffb - prev_ffb):.2f} ({ffb_change_pct:.2f}%)",
             border=True
         )
         st.metric(
-            label=f"CPO Yield {latest_year}",
-            value=f"{latest_cpo:.2f}%",
+            label=f"Total CPO Yield (tons/Ha)",
+            value=f"{latest_cpo:.2f}",
             delta=f"{(latest_cpo - prev_cpo):.2f} ({cpo_change_pct:.2f}%)",
             border=True
         )
         st.metric(
-            label=f'FFB Production (tons)',
+            label=f'Total FFB Production (tons)',
             value=f"{millify(latest_prod, precision=2)}",
             delta=f"{millify(latest_prod - prev_prod, precision=2)} ({prod_change_pct:.2f}%)",
             border=True
@@ -244,18 +244,18 @@ def page1():
         st.divider()
         st.subheader("Monthly Yield")
         st.metric(
-            label=f"Avg Monthly FFB Yield {latest_year}",
-            value=f"{avg_monthly_ffb:.2f} tons/ha",
+            label=f"AVG FFB Yield (tons/Ha)",
+            value=f"{avg_monthly_ffb:.2f}",
             border=True
         )
         st.metric(
-            label="Avg Monthly CPO Yield",
-            value=f"{avg_monthly_cpo:.2f} tons/ha",
+            label="AVG CPO Yield (tons/Ha)",
+            value=f"{avg_monthly_cpo:.2f}",
             border=True
         )
         st.metric(
-            label="Avg Monthly FFB Production",
-            value=f"{millify(avg_monthly_prod, precision=2)} tons",
+            label="AVG FFB Production (tons)",
+            value=f"{millify(avg_monthly_prod, precision=2)}",
             border=True
         )
     with col[1]: # yearly yield and monthly yield
@@ -307,7 +307,7 @@ def page1():
         with prod:
             st.subheader("FFB Yield 10 years trend")
             chart = alt.Chart(yearly_yield).mark_line(
-                point=alt.OverlayMarkDef(filled=True, fill='lightblue', strokeWidth=2)
+                point=alt.OverlayMarkDef(filled=True, strokeWidth=2)
                 ).encode(
                 x=alt.X('Year:O', title='', axis=alt.Axis(labelAngle=0)),
                 y=alt.Y('FFB_production:Q', title='FFB production (tonnes)'),
