@@ -112,6 +112,70 @@ def page2():
             selected_ssp = st.segmented_control('Select SSP Scenario', options=['SSP126', 'SSP245', 'SSP370', 'SSP585'], default='SSP126')
             selected_years = st.slider('Select Year', min_value=2025, max_value=2100, value=2025, step=1)
             selected_month = st.slider('Select Month', min_value=1, max_value=12, value=1, step=1)
+            # Explanation of SSP
+            st.markdown("""
+                <h4>What is SSP?</h4>
+                <p style="text-align: justify;">SSP stands for <b>Shared Socioeconomic Pathways</b>. These are scenarios created by scientists to imagine how human actions, policies, and development might affect climate change in the future.</p>
+            """, unsafe_allow_html=True)
+
+            # Define SSP scenarios
+            ssp_scenarios = {
+                'SSP126': {
+                    'title': 'SSP126: A Very Sustainable World',
+                    'description': """
+                        <ul>
+                            <li>Low greenhouse gas emissions</li>
+                            <li>Rapid adoption of clean energy</li>
+                            <li>Global cooperation</li>
+                            <li>Eco-friendly lifestyles</li>
+                            <li>Minimal climate impacts due to successful emission reductions</li>
+                        </ul>
+                    """
+                },
+                'SSP245': {
+                    'title': 'SSP245: A Middle-of-the-Road World',
+                    'description': """
+                        <ul>
+                            <li>Moderate greenhouse gas emissions</li>
+                            <li>Some progress on clean energy</li>
+                            <li>Balance between sustainability and business-as-usual practices</li>
+                            <li>Not enough to significantly reduce climate risks</li>
+                        </ul>
+                    """
+                },
+                'SSP370': {
+                    'title': 'SSP370: A Fragmented World',
+                    'description': """
+                        <ul>
+                            <li>High greenhouse gas emissions</li>
+                            <li>Weak global cooperation</li>
+                            <li>Slow adoption of clean energy</li>
+                            <li>Economic and political challenges</li>
+                            <li>Limited climate action, worsening climate impacts</li>
+                        </ul>
+                    """
+                },
+                'SSP585': {
+                    'title': 'SSP585: A Fossil-Fuel-Heavy World',
+                    'description': """
+                        <ul>
+                            <li>Extremely high greenhouse gas emissions</li>
+                            <li>Heavy reliance on fossil fuels</li>
+                            <li>Limited climate action</li>
+                            <li>Severe and widespread climate impacts</li>
+                        </ul>
+                    """
+                }
+            }
+            
+            # Display the selected SSP scenario
+            if selected_ssp in ssp_scenarios:
+                scenario = ssp_scenarios[selected_ssp]
+                st.markdown(f"""
+                            
+                        <h5>{scenario['title']}</h5>
+                        {scenario['description']}
+                """, unsafe_allow_html=True)
             
         with cols[1]:
             # fetch SSP data 
@@ -121,7 +185,7 @@ def page2():
             ssp_input = ssp_input[['Month', 'pr', 'prpercnt', 'hurs', 'spei12', 'tas', 'tasmin', 'tasmax','cdd', 'cwd', 'sd', 'tas_range', 'rolling_pr_3y', 'rolling_pr_2y', 'rolling_pr_1y']]
             month_names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
             month_name = month_names[selected_month - 1]
-            st.write(f'Projected Climate Data for {month_name} {selected_years}: ')
+            st.write(f'<h4>Projected Climate Data for {month_name} {selected_years}: </h4>', unsafe_allow_html=True)
             climate_data = {
                 'Metric': ['Precipitation (mm)', 'Temperature (°C)', 'Humidity (%)', 'Drought Index', 'Consecutive Dry Days', 'Consecutive Wet Days', 'Precipitation Percent Change', 'Temperature Range (°C)', 'Rolling Precipitation 3 Years (mm)', 'Rolling Precipitation 2 Years (mm)', 'Rolling Precipitation 1 Year (mm)'],
                 'Value': [f"{ssp_input['pr'].values[0]:.3f}", f"{ssp_input['tas'].values[0]:.3f}", f"{ssp_input['hurs'].values[0]:.3f}", f"{ssp_input['spei12'].values[0]:.3f}", f"{ssp_input['cdd'].values[0]:.3f}", f"{ssp_input['cwd'].values[0]:.3f}", f"{ssp_input['prpercnt'].values[0]:.3f}", f"{ssp_input['tas_range'].values[0]:.3f}", f"{ssp_input['rolling_pr_3y'].values[0]:.3f}", f"{ssp_input['rolling_pr_2y'].values[0]:.3f}", f"{ssp_input['rolling_pr_1y'].values[0]:.3f}"]
