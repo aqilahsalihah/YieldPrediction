@@ -305,7 +305,7 @@ def page1():
             st.altair_chart(lines, use_container_width=True)
             
         with prod:
-            st.subheader("FFB Yield 10 years trend")
+            st.subheader("FFB Production 10 years trend")
             chart = alt.Chart(yearly_yield).mark_line(
                 point=alt.OverlayMarkDef(filled=True, strokeWidth=2)
                 ).encode(
@@ -318,7 +318,7 @@ def page1():
             )
             st.altair_chart(chart, use_container_width=True)
             
-            st.subheader("Monthly Yield")
+            st.subheader("Monthly Production")
             ffb_production_chart = month_bar(this_year, 'FFB_production', 'FFB_Production_Category', millify_values=True)
             st.altair_chart(ffb_production_chart, use_container_width=True)
             
@@ -334,7 +334,7 @@ def page1():
                 height=300
             )
 
-            st.subheader("Monthly Yield Comparison")
+            st.subheader("Monthly Production Comparison")
             st.altair_chart(lines, use_container_width=True)
 
     with col[2]: # AI insights
