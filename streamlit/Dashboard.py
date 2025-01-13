@@ -41,6 +41,9 @@ climate_2 = load_data('streamlit/data/ssp126_climate4.csv')
 
 climate_info = pd.concat([climate_info, climate_2], ignore_index=True)
 climate_info = get_month_name(climate_info)
+selected_year = max(climate_info['Year'])
+earliest_year = selected_year - 9
+climate_info = climate_info[climate_info['Year'] >= earliest_year]
 
 years = list(palm_oil['Year'].unique())
 
@@ -373,6 +376,9 @@ def page1():
                 'Humidity': climate_info[['Year','Month_Name', 'hurs']],
                 'Max Temperature': climate_info[['Year','Month_Name', 'tasmax']],
                 'Min Temperature': climate_info[['Year','Month_Name', 'tasmin']],
+                'Cumalative Wet Days': climate_info[['Year','Month_Name', 'cwd']],
+                'Cumalative Dry Days': climate_info[['Year','Month_Name', 'cdd']],
+                'Summer Days': climate_info[['Year','Month_Name', 'sd']],
             }
 
             data = {
@@ -416,7 +422,9 @@ def page1():
             with st.spinner("Generating AI Summary..."):
                 ai_insight = generate_insights(dashboard_data)
                 to_write = ai_insight.get('message')
-                st.write_stream(stream_data(to_write))
+                st.markdown(f"<div style='text-align: justify;'> {to_write} </div>", unsafe_allow_html=True)
+                # st.write_stream(stream_data(to_write))
+                # # st.markdown("", unsafe_allow_html=True)
                 
 
 page1()
