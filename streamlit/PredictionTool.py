@@ -1,4 +1,4 @@
-import joblib
+import joblib  # type: ignore
 import pandas as pd
 import streamlit as st
 
