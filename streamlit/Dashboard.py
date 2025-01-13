@@ -113,10 +113,20 @@ def process_data(selected_years):
 
 
 color_palette = ["#fd8d3c", "#a1d99b", "#ffffcc"]
-def trend_10(yearly_yield, var, domain):
+def trend_10(yearly_yield, var):
+
+    
+    if 'Yield' in var:
+        y_title = f"{var} (tonnes/ha)"
+        min_value = yearly_yield[f'{var}'].min() - 1
+        max_value = yearly_yield[f'{var}'].max() + 1
+    else:
+        y_title = f"{var} (tonnes)"
+        min_value = yearly_yield[f'{var}'].min() - 5000000
+        max_value = yearly_yield[f'{var}'].max() + 5000000
     ffb_chart = alt.Chart(yearly_yield).mark_line(point=True).encode(
                 x=alt.X('Year:O', title='', axis=alt.Axis(labelAngle=0)),
-                y=alt.Y(f'{var}_Yield:Q', title=f'{var} Yield (tonnes/ha)'),
+                y=alt.Y(f'{var}:Q', title=y_title, scale=alt.Scale(domain=[min_value, max_value])),
                 color=alt.Color('Yield_Type:N', scale=alt.Scale(range=color_palette), legend=None)
             ).properties(
                 width=600,
@@ -167,9 +177,11 @@ def month_bar(data, y_value, color_value, millify_values=False):
     return monthly_chart
 
 def month_comparison(monthly_yield, var):
+    min_value = monthly_yield[f'{var}_Yield'].min() - 0.5
+    max_value = monthly_yield[f'{var}_Yield'].max() + 0.5
     lines = alt.Chart(monthly_yield).mark_line(point=True).encode(
                 x=alt.X('Month_Name:N', title='', axis=alt.Axis(labelAngle=0), sort=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']),
-                y=alt.Y(f'{var}_Yield:Q', title=f'{var} Yield (tonnes/ha)'),
+                y=alt.Y(f'{var}_Yield:Q', title=f'{var} Yield (tonnes/ha)', scale=alt.Scale(domain=[min_value, max_value])),
                 color=alt.Color('Year:N', title='Year', scale=alt.Scale(range=color_palette), legend=alt.Legend(title='', orient='top')),
                 detail='Year:N'
             ).properties(
@@ -262,63 +274,43 @@ def page1():
 
         ffb, cpo, prod = st.tabs(['Fresh Fruit Bunches Yield', 'Crude Palm Oil Yield', 'Fresh Fruit Bunches Production'])
         with ffb:
-            # past years trend
-            st.subheader(f"FFB Yield {len(yearly_yield)} years trend")
-            chart = trend_10(yearly_yield, 'FFB', (10.0, 20.0))
-            st.altair_chart(chart, use_container_width=True)
-            
             # Monthly Yield
-            st.subheader("Monthly Yield")
+            st.subheader("Monthly  FFB Yield")
             chart = month_bar(this_year, 'FFB_Yield', 'FFB_Yield_Category')
             st.altair_chart(chart, use_container_width=True)
             
             # compare the monthly yield for the latest year with prev year
+            st.subheader("Monthly FFB Yield Comparison")
             lines = month_comparison(monthly_yield, 'FFB')
-
-            st.subheader("Monthly Yield Comparison")
             st.altair_chart(lines, use_container_width=True)
         
-            
-        with cpo:
-            st.subheader("CPO Yield 10 years trend")
-            chart = trend_10(yearly_yield, 'CPO', (2.0, 4.0))
+            # past years trend
+            st.subheader(f"FFB Yield {len(yearly_yield)} years trend")
+            chart = trend_10(yearly_yield, 'FFB_Yield')
             st.altair_chart(chart, use_container_width=True)
             
-            st.subheader("Monthly Yield")
+            
+        with cpo:
+            
+            # Monthly Yield
+            st.subheader("Monthly CPO Yield")
             cpo_yield_chart = month_bar(this_year, 'CPO_Yield', 'CPO_Yield_Category')
             st.altair_chart(cpo_yield_chart, use_container_width=True)
             
             # compare the monthly yield for the latest year with prev year
-            
-            lines = alt.Chart(monthly_yield).mark_line(point=True).encode(
-                x=alt.X('Month_Name:N', title='', axis=alt.Axis(labelAngle=0), sort=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']),
-                y=alt.Y('CPO_Yield:Q', title='CPO Yield (tonnes/ha)'),
-                color=alt.Color('Year:N', title='Year', legend=alt.Legend(title='', orient='top')),
-                detail='Year:N'
-            ).properties(
-                width=600,
-                height=300
-            )
-
-            st.subheader("Monthly Yield Comparison")
+            st.subheader("Monthly CPO Yield Comparison")
             lines = month_comparison(monthly_yield, 'CPO')
             st.altair_chart(lines, use_container_width=True)
             
-        with prod:
-            st.subheader("FFB Production 10 years trend")
-            chart = alt.Chart(yearly_yield).mark_line(
-                point=alt.OverlayMarkDef(filled=True, strokeWidth=2)
-                ).encode(
-                x=alt.X('Year:O', title='', axis=alt.Axis(labelAngle=0)),
-                y=alt.Y('FFB_production:Q', title='FFB production (tonnes)'),
-                color=alt.Color('Yield_Type:N', scale=alt.Scale(range=color_palette), legend=None)
-            ).properties(
-                width=600,
-                height=250
-            )
+            # past years trend
+            st.subheader("CPO Yield 10 years trend")
+            chart = trend_10(yearly_yield, 'CPO_Yield')
             st.altair_chart(chart, use_container_width=True)
             
-            st.subheader("Monthly Production")
+        with prod:
+            
+            # Monthly Yield
+            st.subheader("Monthly FFB Production")
             ffb_production_chart = month_bar(this_year, 'FFB_production', 'FFB_Production_Category', millify_values=True)
             st.altair_chart(ffb_production_chart, use_container_width=True)
             
@@ -334,8 +326,13 @@ def page1():
                 height=300
             )
 
-            st.subheader("Monthly Production Comparison")
+            st.subheader("Monthly FFB Production Comparison")
             st.altair_chart(lines, use_container_width=True)
+            
+            # past years trend
+            st.subheader("FFB Production 10 years trend")
+            chart = trend_10(yearly_yield, 'FFB_production')
+            st.altair_chart(chart, use_container_width=True)
 
     with col[2]: # AI insights
         @st.cache_data
