@@ -189,7 +189,6 @@ def page2():
             
         with cols[1]:
             # fetch SSP data 
-            ssp_df = pd.read_csv(f'streamlit/data/{selected_ssp.lower()}_climate3.csv')
             ssp_df = pd.read_csv(f'streamlit/data/{selected_ssp.lower()}_climate4.csv')
             ssp_input = ssp_df[(ssp_df['Year'] == selected_years) & (ssp_df['Month'] == selected_month)]
             ssp_input = ssp_input[['Month', 'pr', 'prpercnt', 'hurs', 'spei12', 'tas', 'tasmin', 'tasmax','cdd', 'cwd', 'sd', 'tas_range', 'rolling_pr_3y', 'rolling_pr_2y', 'rolling_pr_1y']]
