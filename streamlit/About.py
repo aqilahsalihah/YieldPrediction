@@ -16,8 +16,11 @@ def about_page():
     ---
 
     ### **Overview**
-    This Streamlit Web application leverages advanced machine learning models and historical climate data to provide actionable insights into palm oil yields.  
-    🌟 Designed for stakeholders to **assess the impacts of climate variability** and plan for future scenarios.
+    This Streamlit Web application is part of a **Data Science project** aimed at exploring the impact of climate variability on palm oil yields in Malaysia. By leveraging advanced machine learning models and historical climate data, the application offers actionable insights into the yields of **Fresh Fruit Bunches (FFB)** and **Crude Palm Oil (CPO)**.  
+    
+    🌟 The goal of this project is to **help stakeholders assess the effects of climate variability** and plan for future scenarios to ensure sustainable palm oil production.
+
+    The project uses **climate projections** and key climate variables such as precipitation, temperature, humidity, and drought indices to provide accurate yield forecasts and uncover patterns that influence palm oil yields over time.
 
     ---
 
@@ -25,6 +28,7 @@ def about_page():
     - 📊 **Dashboard**: 
         - Visualize historical and current palm oil yields alongside climate trends.
         - Explore key metrics such as Fresh Fruit Bunch (FFB) and Crude Palm Oil (CPO) yields over time.
+        - Generate dynamic AI summaries to gain actionable insights.
     - 🔮 **Yield Prediction Tool**: 
         - Predict future yields based on manual input or climate projections.
         - Analyze "what-if" scenarios for strategic decision-making.
@@ -35,23 +39,21 @@ def about_page():
     1. **Navigate**:
         - Use the **sidebar** to access different sections of the app.
     2. **Dashboard**:
-        - Explore key metrics, historical trends, and monthly yield comparisons.
+        - **Select a year** to view specific yield metrics and trends.
+        - **Choose a commodity**: Fresh Fruit Bunches Yield, Crude Palm Oil Yield, or Fresh Fruit Bunches Production.
+        - **Generate AI Summary**: Obtain automated insights and trends for the selected year and commodity.
+
     3. **Yield Prediction Tool**:
-        - Enter climate variables manually or use predefined climate scenarios to forecast future yields.
+        - **Select a prediction method**: 
+            - **Manual Input**:
+                - Adjust sliders to simulate specific climate conditions.
+                - View the resulting yield predictions for FFB and CPO.
+            - **Climate Projection**:
+                - Choose a Shared Socioeconomic Pathway (SSP) scenario.
+                - Select the **month** and **year** using sliders.
+                - View projected climate conditions and corresponding yield predictions.
 
     ---
-
-    ### **🔍 About the Models**
-    The predictive models are trained using **historical climate and yield data**, incorporating climate variables such as:
-    - ☔ **Precipitation**: Annual and monthly rainfall totals.
-    - 🌡️ **Temperature**: Includes average, maximum, and minimum temperatures.
-    - 🌵 **Drought Index (SPEI12)**: Measures water deficits considering evapotranspiration.
-    - 🏜️ **Cumulative Dry Days**:  Number of consecutive  days where precipitation < 1mm
-    - 🌧️ **Cumulative Wet Days**: Number of consecutive  days where precipitation >= 1mm
-
-    Models such as **Random Forest Regressor** and **Extra Trees Regressor** predict:
-    - Fresh Fruit Bunch (FFB) yield (tons/ha).
-    - Crude Palm Oil (CPO) yield (tons/ha).
 
     """)
 about_page()

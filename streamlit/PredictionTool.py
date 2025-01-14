@@ -17,8 +17,6 @@ def page2():
     st.title('Yield Prediction Tool 🔨')
     
     # Load the prediction models
-    ffb_model = load_model('streamlit/ffb_yield_model2.pkl')
-    cpo_model = load_model('streamlit/cpo_yield_model2.pkl') 
     cpo_model_new = load_model('streamlit/cpo_yield_model5.pkl') 
     ffb_model_new = load_model('streamlit/ffb_yield_model5.pkl') 
      
@@ -44,15 +42,27 @@ def page2():
                             </ul>
                         </p>
                         <p>
-                            Trained on <b>historical climate and yield data</b>, the model achieves:
-                            <ul style="margin-left: 20px;">
-                                <li>Validation Score: <b>0.70</b> for FFB and <b>0.69</b> for CPO.</li>
-                                <li>Mean Error (MSE): <b>0.10</b> for both models.</li>
-                            </ul>
-                            These metrics demonstrate the model's robust performance in capturing complex relationships between climate factors and palm oil yields.
+                            Trained on <b>historical climate and yield data</b>, the model evaluation scores were:
                         </p>
                     </div>
                     """, unsafe_allow_html=True)
+        
+        evaluation_scores = {
+            'FFB Yield Model': {
+                'R²': 0.706,
+                'MAE': 0.106,
+                'MSE': 0.018,
+                'RMSE': 0.131,
+            },
+            'CPO Yield Model': {
+                'R²': 0.668,
+                'MAE': 0.025,
+                'MSE': 0.001,
+                'RMSE': 0.031,
+            }
+        }
+        df = pd.DataFrame(evaluation_scores)
+        st.dataframe(df, height=175, width=550)
 
     with tabs[1]:    
         st.subheader('Manual Input')
